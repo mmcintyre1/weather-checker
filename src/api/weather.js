@@ -10,7 +10,7 @@ export async function fetchWeather(latitude, longitude, unit = 'celsius') {
     latitude,
     longitude,
     current: 'temperature_2m,weathercode,windspeed_10m,apparent_temperature,relativehumidity_2m',
-    daily: 'weathercode,temperature_2m_max,temperature_2m_min',
+    daily: 'weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max',
     temperature_unit: unit,
     wind_speed_unit: 'mph',
     timezone: 'auto',
@@ -35,6 +35,7 @@ export async function fetchWeather(latitude, longitude, unit = 'celsius') {
       weathercode: data.daily.weathercode,
       tempMax: data.daily.temperature_2m_max,
       tempMin: data.daily.temperature_2m_min,
+      precipProb: data.daily.precipitation_probability_max,
     },
     units: {
       temperature: data.current_units.temperature_2m,

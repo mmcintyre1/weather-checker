@@ -199,3 +199,9 @@
   font-size: 0.75rem;
   color: var(--color-text-secondary);
 }
+
+.fc-precip {
+  font-size: 0.7rem;
+  color: #60a5fa;
+  font-weight: 500;
+}

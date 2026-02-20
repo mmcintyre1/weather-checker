@@ -13,12 +13,16 @@ function ForecastStrip({ daily, unit }) {
         const dayLabel = new Intl.DateTimeFormat('en', { weekday: 'short' })
           .format(new Date(dateStr + 'T00:00:00'))
         const info = getWeatherInfo(daily.weathercode[idx])
+        const precip = daily.precipProb?.[idx]
         return (
           <div key={dateStr} className="forecast-day">
             <span className="fc-day">{dayLabel}</span>
             <span className="fc-symbol">{info.symbol}</span>
             <span className="fc-high">{formatTemp(daily.tempMax[idx], unit)}</span>
             <span className="fc-low">{formatTemp(daily.tempMin[idx], unit)}</span>
+            {precip != null && (
+              <span className="fc-precip">{precip}%</span>
+            )}
           </div>
         )
       })}
@@ -93,6 +97,7 @@ export default function WeatherTile({ location, onRemove }) {
             </div>
             <p className="tile-desc">{info.description}</p>
             <div className="tile-meta">
+              <span>H: {formatTemp(weather.daily.tempMax[0], unit)} · L: {formatTemp(weather.daily.tempMin[0], unit)}</span>
               <span>Feels like {formatTemp(weather.current.feelsLike, unit)}</span>
               <span>{weather.current.humidity}% humidity</span>
               <span>{Math.round(weather.current.windspeed)} {weather.units.windspeed}</span>
