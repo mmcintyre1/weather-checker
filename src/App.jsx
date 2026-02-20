@@ -1,10 +1,21 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import AddTile from './components/AddTile'
 import WeatherTile from './components/WeatherTile'
 import './App.css'
 
 export default function App() {
-  const [locations, setLocations] = useState([])
+  const [locations, setLocations] = useState(() => {
+    try {
+      const saved = localStorage.getItem('weather-locations')
+      return saved ? JSON.parse(saved) : []
+    } catch {
+      return []
+    }
+  })
+
+  useEffect(() => {
+    localStorage.setItem('weather-locations', JSON.stringify(locations))
+  }, [locations])
 
   function handleAdd(locationEntry) {
     // Prevent duplicates by lat/lon
