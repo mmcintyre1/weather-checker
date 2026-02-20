@@ -97,25 +97,41 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Loading */
-.tile-loading {
+/* Skeleton loading */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+.skel {
+  background: linear-gradient(90deg, #f0efed 25%, #e6e4e1 50%, #f0efed 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: 5px;
+}
+
+.tile-skeleton {
   display: flex;
-  justify-content: center;
-  padding: 2rem 0;
+  flex-direction: column;
+  gap: 0.625rem;
 }
 
-.tile-spinner {
-  display: block;
-  width: 24px;
-  height: 24px;
-  border: 2.5px solid var(--color-border);
-  border-top-color: var(--color-accent);
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
+.skel-temp  { height: 48px; width: 55%; }
+.skel-desc  { height: 14px; width: 45%; }
+.skel-meta  { height: 12px; width: 80%; }
+
+.skel-forecast-row {
+  display: flex;
+  gap: 4px;
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-border);
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+.skel-fc {
+  flex: 1;
+  height: 64px;
+  border-radius: 6px;
 }
 
 /* Error */

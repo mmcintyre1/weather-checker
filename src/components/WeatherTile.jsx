@@ -159,8 +159,13 @@ export default function WeatherTile({ location, onRemove, onDragStart, onDrop })
       </header>
 
       {loading && (
-        <div className="tile-loading">
-          <span className="tile-spinner" />
+        <div className="tile-skeleton">
+          <div className="skel skel-temp" />
+          <div className="skel skel-desc" />
+          <div className="skel skel-meta" />
+          <div className="skel-forecast-row">
+            {[1, 2, 3, 4, 5].map(n => <div key={n} className="skel skel-fc" />)}
+          </div>
         </div>
       )}
 
