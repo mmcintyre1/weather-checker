@@ -44,6 +44,28 @@ function useRelativeTime(date) {
   return `${mins} mins ago`
 }
 
+function HourlyStrip({ hourly, unit }) {
+  return (
+    <div className="hourly-strip">
+      {hourly.time.map((timeStr, i) => {
+        const hour = new Intl.DateTimeFormat('en', { hour: 'numeric', hour12: true })
+          .format(new Date(timeStr))
+        const info = getWeatherInfo(hourly.weathercode[i])
+        return (
+          <div key={timeStr} className="hourly-item">
+            <span className="hr-time">{i === 0 ? 'Now' : hour}</span>
+            <span className="hr-symbol">{info.symbol}</span>
+            <span className="hr-temp">{formatTemp(hourly.temperature[i], unit)}</span>
+            {hourly.precipProb[i] > 0 && (
+              <span className="hr-precip">{hourly.precipProb[i]}%</span>
+            )}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
 export default function WeatherTile({ location, onRemove, onDragStart, onDrop }) {
   const [weather, setWeather] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -51,6 +73,7 @@ export default function WeatherTile({ location, onRemove, onDragStart, onDrop })
   const [unit, setUnit] = useState('celsius')
   const [refreshKey, setRefreshKey] = useState(0)
   const [lastUpdated, setLastUpdated] = useState(null)
+  const [forecastView, setForecastView] = useState('daily')
 
   const updatedLabel = useRelativeTime(lastUpdated)
 
@@ -161,22 +184,41 @@ export default function WeatherTile({ location, onRemove, onDragStart, onDrop })
             </div>
           </div>
 
-          <div className="tile-unit-toggle">
-            <button
-              className={`unit-btn${unit === 'celsius' ? ' active' : ''}`}
-              onClick={() => setUnit('celsius')}
-            >
-              °C
-            </button>
-            <button
-              className={`unit-btn${unit === 'fahrenheit' ? ' active' : ''}`}
-              onClick={() => setUnit('fahrenheit')}
-            >
-              °F
-            </button>
+          <div className="tile-controls">
+            <div className="tile-unit-toggle">
+              <button
+                className={`unit-btn${unit === 'celsius' ? ' active' : ''}`}
+                onClick={() => setUnit('celsius')}
+              >
+                °C
+              </button>
+              <button
+                className={`unit-btn${unit === 'fahrenheit' ? ' active' : ''}`}
+                onClick={() => setUnit('fahrenheit')}
+              >
+                °F
+              </button>
+            </div>
+            <div className="tile-view-toggle">
+              <button
+                className={`unit-btn${forecastView === 'daily' ? ' active' : ''}`}
+                onClick={() => setForecastView('daily')}
+              >
+                5-day
+              </button>
+              <button
+                className={`unit-btn${forecastView === 'hourly' ? ' active' : ''}`}
+                onClick={() => setForecastView('hourly')}
+              >
+                24-hr
+              </button>
+            </div>
           </div>
 
-          <ForecastStrip daily={weather.daily} unit={unit} />
+          {forecastView === 'daily'
+            ? <ForecastStrip daily={weather.daily} unit={unit} />
+            : <HourlyStrip hourly={weather.hourly} unit={unit} />
+          }
         </>
       )}
     </article>

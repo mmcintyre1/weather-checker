@@ -169,6 +169,26 @@
   color: var(--color-text-secondary);
 }
 
+/* Controls row (unit + view toggles) */
+.tile-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.tile-view-toggle {
+  display: flex;
+  gap: 0;
+  border: 1.5px solid var(--color-border);
+  border-radius: 7px;
+  overflow: hidden;
+  width: fit-content;
+}
+
+.tile-view-toggle .unit-btn:first-child {
+  border-right: 1.5px solid var(--color-border);
+}
+
 /* Unit toggle */
 .tile-unit-toggle {
   display: flex;
@@ -249,6 +269,60 @@
 }
 
 .fc-precip {
+  font-size: 0.7rem;
+  color: #60a5fa;
+  font-weight: 500;
+}
+
+/* Hourly strip */
+.hourly-strip {
+  display: flex;
+  gap: 0;
+  border-top: 1px solid var(--color-border);
+  padding-top: 0.875rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.hourly-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.hourly-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  flex: 0 0 52px;
+  padding: 0 4px;
+}
+
+.hourly-item:not(:last-child) {
+  border-right: 1px solid var(--color-border);
+}
+
+.hr-time {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.hr-symbol {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.hr-temp {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.hr-precip {
   font-size: 0.7rem;
   color: #60a5fa;
   font-weight: 500;

@@ -10,6 +10,7 @@ export async function fetchWeather(latitude, longitude, unit = 'celsius') {
     latitude,
     longitude,
     current: 'temperature_2m,weathercode,windspeed_10m,apparent_temperature,relativehumidity_2m',
+    hourly: 'temperature_2m,weathercode,precipitation_probability',
     daily: 'weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max',
     temperature_unit: unit,
     wind_speed_unit: 'mph',
@@ -22,6 +23,10 @@ export async function fetchWeather(latitude, longitude, unit = 'celsius') {
 
   const data = await res.json()
 
+  // Find the index of the current hour in the hourly array so we can slice from now
+  const currentHourPrefix = data.current.time.slice(0, 13) // "2026-02-20T15"
+  const hourlyStart = Math.max(0, data.hourly.time.findIndex(t => t.startsWith(currentHourPrefix)))
+
   return {
     current: {
       temperature: data.current.temperature_2m,
@@ -29,6 +34,12 @@ export async function fetchWeather(latitude, longitude, unit = 'celsius') {
       humidity: data.current.relativehumidity_2m,
       windspeed: data.current.windspeed_10m,
       weathercode: data.current.weathercode,
+    },
+    hourly: {
+      time: data.hourly.time.slice(hourlyStart, hourlyStart + 24),
+      weathercode: data.hourly.weathercode.slice(hourlyStart, hourlyStart + 24),
+      temperature: data.hourly.temperature_2m.slice(hourlyStart, hourlyStart + 24),
+      precipProb: data.hourly.precipitation_probability.slice(hourlyStart, hourlyStart + 24),
     },
     daily: {
       time: data.daily.time,
