@@ -30,11 +30,29 @@ function ForecastStrip({ daily, unit }) {
   )
 }
 
+function useRelativeTime(date) {
+  const [, setTick] = useState(0)
+  useEffect(() => {
+    if (!date) return
+    const interval = setInterval(() => setTick(n => n + 1), 30000)
+    return () => clearInterval(interval)
+  }, [date])
+  if (!date) return null
+  const mins = Math.floor((Date.now() - date) / 60000)
+  if (mins < 1) return 'Just now'
+  if (mins === 1) return '1 min ago'
+  return `${mins} mins ago`
+}
+
 export default function WeatherTile({ location, onRemove }) {
   const [weather, setWeather] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [unit, setUnit] = useState('celsius')
+  const [refreshKey, setRefreshKey] = useState(0)
+  const [lastUpdated, setLastUpdated] = useState(null)
+
+  const updatedLabel = useRelativeTime(lastUpdated)
 
   useEffect(() => {
     let cancelled = false
@@ -45,6 +63,7 @@ export default function WeatherTile({ location, onRemove }) {
       .then(data => {
         if (!cancelled) {
           setWeather(data)
+          setLastUpdated(new Date())
           setLoading(false)
         }
       })
@@ -56,7 +75,7 @@ export default function WeatherTile({ location, onRemove }) {
       })
 
     return () => { cancelled = true }
-  }, [location.latitude, location.longitude, unit])
+  }, [location.latitude, location.longitude, unit, refreshKey])
 
   const info = weather ? getWeatherInfo(weather.current.weathercode) : null
 
@@ -72,10 +91,24 @@ export default function WeatherTile({ location, onRemove }) {
       </button>
 
       <header className="tile-header">
-        <h2 className="tile-city">{location.name}</h2>
+        <div className="tile-header-top">
+          <h2 className="tile-city">{location.name}</h2>
+          <button
+            className="tile-refresh"
+            onClick={() => setRefreshKey(k => k + 1)}
+            disabled={loading}
+            title="Refresh"
+            aria-label="Refresh weather"
+          >
+            ↻
+          </button>
+        </div>
         <p className="tile-region">
           {[location.admin1, location.country].filter(Boolean).join(', ')}
         </p>
+        {updatedLabel && (
+          <p className="tile-updated">Updated {updatedLabel}</p>
+        )}
       </header>
 
       {loading && (

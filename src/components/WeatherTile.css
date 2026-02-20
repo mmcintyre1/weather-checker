@@ -36,6 +36,13 @@
   padding-right: 1.5rem;
 }
 
+.tile-header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
 .tile-city {
   font-size: 1.25rem;
   font-weight: 600;
@@ -43,10 +50,37 @@
   color: var(--color-text-primary);
 }
 
+.tile-refresh {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  padding: 0.1rem 0.25rem;
+  border-radius: 4px;
+  transition: color 0.15s, background 0.15s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.tile-refresh:hover:not(:disabled) {
+  color: var(--color-accent);
+  background: rgba(59, 130, 246, 0.08);
+}
+
+.tile-refresh:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
 .tile-region {
   font-size: 0.8125rem;
   color: var(--color-text-secondary);
   margin-top: 2px;
+}
+
+.tile-updated {
+  font-size: 0.7rem;
+  color: var(--color-text-secondary);
+  opacity: 0.7;
+  margin-top: 3px;
 }
 
 /* Loading */
