@@ -32,6 +32,21 @@ export default function App() {
     setLocations(prev => prev.filter(loc => loc.id !== id))
   }
 
+  const dragIndex = useRef(null)
+
+  function handleDragStart(index) {
+    dragIndex.current = index
+  }
+
+  function handleDrop(index) {
+    if (dragIndex.current === null || dragIndex.current === index) return
+    const updated = [...locations]
+    const [moved] = updated.splice(dragIndex.current, 1)
+    updated.splice(index, 0, moved)
+    setLocations(updated)
+    dragIndex.current = null
+  }
+
   return (
     <div className="app">
       <header className="app-header">
@@ -40,11 +55,13 @@ export default function App() {
       </header>
 
       <main className="tile-grid">
-        {locations.map(loc => (
+        {locations.map((loc, i) => (
           <WeatherTile
             key={loc.id}
             location={loc}
             onRemove={handleRemove}
+            onDragStart={() => handleDragStart(i)}
+            onDrop={() => handleDrop(i)}
           />
         ))}
       </main>

@@ -44,7 +44,7 @@ function useRelativeTime(date) {
   return `${mins} mins ago`
 }
 
-export default function WeatherTile({ location, onRemove }) {
+export default function WeatherTile({ location, onRemove, onDragStart, onDrop }) {
   const [weather, setWeather] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -97,7 +97,13 @@ export default function WeatherTile({ location, onRemove }) {
   const info = weather ? getWeatherInfo(weather.current.weathercode) : null
 
   return (
-    <article className="weather-tile">
+    <article
+      className="weather-tile"
+      draggable
+      onDragStart={onDragStart}
+      onDragOver={e => e.preventDefault()}
+      onDrop={onDrop}
+    >
       <button
         className="tile-remove"
         onClick={() => onRemove(location.id)}
