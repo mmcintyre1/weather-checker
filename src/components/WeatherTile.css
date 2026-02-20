@@ -83,6 +83,10 @@
   margin-top: 3px;
 }
 
+.tile-local-time {
+  font-variant-numeric: tabular-nums;
+}
+
 /* Loading */
 .tile-loading {
   display: flex;

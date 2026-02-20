@@ -54,6 +54,23 @@ export default function WeatherTile({ location, onRemove }) {
 
   const updatedLabel = useRelativeTime(lastUpdated)
 
+  const [localTime, setLocalTime] = useState('')
+  useEffect(() => {
+    function tick() {
+      setLocalTime(
+        new Intl.DateTimeFormat('en', {
+          timeZone: location.timezone,
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true,
+        }).format(new Date())
+      )
+    }
+    tick()
+    const interval = setInterval(tick, 60000)
+    return () => clearInterval(interval)
+  }, [location.timezone])
+
   useEffect(() => {
     let cancelled = false
     setLoading(true)
@@ -105,6 +122,7 @@ export default function WeatherTile({ location, onRemove }) {
         </div>
         <p className="tile-region">
           {[location.admin1, location.country].filter(Boolean).join(', ')}
+          {localTime && <span className="tile-local-time"> · {localTime}</span>}
         </p>
         {updatedLabel && (
           <p className="tile-updated">Updated {updatedLabel}</p>
