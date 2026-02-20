@@ -126,6 +126,7 @@ export default function WeatherTile({ location, onRemove, onDragStart, onDrop })
       onDragStart={onDragStart}
       onDragOver={e => e.preventDefault()}
       onDrop={onDrop}
+      style={info?.tint ? { background: info.tint } : undefined}
     >
       <button
         className="tile-remove"
