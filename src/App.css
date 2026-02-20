@@ -1,0 +1,49 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.app-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2.5rem 1.5rem 1.5rem;
+}
+
+.app-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Tile grid */
+.tile-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 0.75rem 1.5rem 2rem;
+}
+
+.tile-grid > * {
+  width: min(300px, 100%);
+  flex-shrink: 0;
+}
+
+/* Responsive: on very small screens reduce padding */
+@media (max-width: 400px) {
+  .app-header {
+    padding: 1.5rem 1rem 1rem;
+  }
+
+  .tile-grid {
+    padding: 0.5rem 1rem 1.5rem;
+    gap: 1rem;
+  }
+}

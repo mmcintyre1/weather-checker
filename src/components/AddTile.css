@@ -1,0 +1,107 @@
+.add-tile {
+  position: relative;
+  width: min(380px, 100%);
+}
+
+.add-tile__label {
+  display: none;
+}
+
+.add-tile__input-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.add-tile__input {
+  width: 100%;
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: 10px;
+  font-size: 1rem;
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  box-shadow: var(--shadow);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.add-tile__input:focus {
+  border-color: var(--color-accent);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12), var(--shadow);
+}
+
+.add-tile__input::placeholder {
+  color: #a8a29e;
+}
+
+/* Spinner */
+.add-tile__spinner {
+  position: absolute;
+  right: 0.6rem;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Dropdown */
+.add-tile__dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.add-tile__result {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0.65rem 0.875rem;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.add-tile__result:not(:last-child) {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.add-tile__result:hover {
+  background: var(--color-bg);
+}
+
+.result-name {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.result-sub {
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+}
+
+.add-tile__message {
+  padding: 0.75rem 0.875rem;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.add-tile__message--error {
+  color: var(--color-danger);
+}
