@@ -48,9 +48,17 @@
 
 .tile-header-top {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
+  min-width: 0;
+}
+
+.tile-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-shrink: 0;
 }
 
 .tile-city {
@@ -58,6 +66,10 @@
   font-weight: 600;
   line-height: 1.2;
   color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 }
 
 .tile-refresh {
@@ -84,6 +96,9 @@
   font-size: 0.8125rem;
   color: var(--color-text-secondary);
   margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tile-updated {
@@ -94,7 +109,10 @@
 }
 
 .tile-local-time {
+  font-size: 0.8125rem;
   font-variant-numeric: tabular-nums;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
 }
 
 /* Skeleton loading */

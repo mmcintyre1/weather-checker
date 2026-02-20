@@ -140,19 +140,21 @@ export default function WeatherTile({ location, onRemove, onDragStart, onDrop })
       <header className="tile-header">
         <div className="tile-header-top">
           <h2 className="tile-city">{location.name}</h2>
-          <button
-            className="tile-refresh"
-            onClick={() => setRefreshKey(k => k + 1)}
-            disabled={loading}
-            title="Refresh"
-            aria-label="Refresh weather"
-          >
-            ↻
-          </button>
+          <div className="tile-header-actions">
+            {localTime && <span className="tile-local-time">{localTime}</span>}
+            <button
+              className="tile-refresh"
+              onClick={() => setRefreshKey(k => k + 1)}
+              disabled={loading}
+              title="Refresh"
+              aria-label="Refresh weather"
+            >
+              ↻
+            </button>
+          </div>
         </div>
         <p className="tile-region">
           {[location.admin1, location.country].filter(Boolean).join(', ')}
-          {localTime && <span className="tile-local-time"> · {localTime}</span>}
         </p>
         {updatedLabel && (
           <p className="tile-updated">Updated {updatedLabel}</p>
